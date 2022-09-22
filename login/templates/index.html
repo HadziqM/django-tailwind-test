@@ -41,5 +41,14 @@
         </div>
       </div>
     </header>
+    {% if logger %}
+    <script>
+      async function test() {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        window.alert("{{ logger }}");
+      }
+      test();
+    </script>
+    {% endif %}
   </body>
 </html>
