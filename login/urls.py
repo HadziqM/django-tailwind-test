@@ -5,5 +5,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("", Fullpage.loginpage, name='index'),
-    path("getpost", Fullpage.matchpw, name="test")
+    # path("get_response", Fullpage.get_response, name='get_response'),
+    path("73wyquihsah32okdshfjklqkdjai", Fullpage.matchpw, name="test")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
