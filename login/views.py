@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from .models import Account
 import bcrypt
 
@@ -20,6 +21,12 @@ class Fullpage():
 
     def loginpage(request):
         return render(request, "index.html")
+
+    def get_response(request):
+        print(request.POST['username'])
+        print(request.POST['password'])
+        data = {'taken': True}
+        return JsonResponse(data)
 
     def matchpw(request):
         username = request.POST['username']

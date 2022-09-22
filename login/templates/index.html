@@ -16,16 +16,18 @@
         <div
           class="px-5 py-5 border bg-opacity-30 bg-teal-400 rounded-md shadow-lg"
         >
-          <form method="POST" action="getpost" class="flex flex-col gap-3">
+          <form method="POST" class="flex flex-col gap-3">
             {% csrf_token %}
             <input
               name="username"
+              id="username"
               type="text"
               class="bg-cyan-400 text-center"
               placeholder="username"
             />
             <input
               name="password"
+              id="password"
               type="password"
               class="bg-cyan-400 text-center"
               placeholder="password"
@@ -43,12 +45,11 @@
     </header>
     {% if logger %}
     <script>
-      async function test() {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        window.alert("{{ logger }}");
+      async function test(timer) {
+        await new Promise((resolve) => setTimeout(resolve, timer));
+        window.alert("{{logger}}");
       }
-      test();
     </script>
-    {% endif %}
+    {%endif%}
   </body>
 </html>
