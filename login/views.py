@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Account
+from .models import Account, Ship
 import bcrypt
 
 
@@ -38,9 +38,15 @@ class Fullpage():
         except:
             return render(request, "index.html", context={'logger': f"{request.POST['username']} not found"})
         if crypt.match(password, user.Password):
-            return render(request, "landing_page.html",)
+            return myship(request, user)
         else:
             return render(request, "index.html", context={'logger': "password invalid"})
+
+
+def myship(request, user):
+    ship = Ship.objects.filter(ship_owner=user)
+    ctx = {"qty": len(ship), "owner": user, "ship": ship}
+    return render(request, "landing_page.html", context=ctx)
 
     # def testpost(request):
     #     Account(Username=request.POST['username'], Password=crypt.hash(

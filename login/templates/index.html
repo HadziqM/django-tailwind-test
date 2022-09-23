@@ -11,8 +11,11 @@
   <body>
     <header>
       <div
-        class="w-full bg-logo text-center h-screen flex justify-center items-center"
+        class="w-full bg-ship bg-cover bg-center text-center h-screen flex justify-center items-center"
       >
+        <div
+          class="bg-logo bg-cover bg-center h-16 w-16 absolute left-1 top-1"
+        ></div>
         <div
           class="px-5 py-5 border bg-opacity-30 bg-teal-400 rounded-md shadow-lg"
         >
@@ -26,14 +29,14 @@
               name="username"
               id="username"
               type="text"
-              class="bg-cyan-400 text-center"
+              class="bg-transparent border-x-2 border-y-2 text-center placeholder:text-white"
               placeholder="username"
             />
             <input
               name="password"
               id="password"
               type="password"
-              class="bg-cyan-400 text-center"
+              class="bg-transparent border-x-2 border-y-2 text-center placeholder:text-white"
               placeholder="password"
             />
             <button
