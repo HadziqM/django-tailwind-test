@@ -28,6 +28,14 @@ class Fullpage():
         data = {'taken': True}
         return JsonResponse(data)
 
+    def get_data(request, owner):
+        user = Account.objects.filter(Username=owner)[0]
+        ship = Ship.objects.filter(ship_owner=user)
+        ctx = {}
+        for i in range(len(ship)):
+            ctx[f"d{i}"] = [ship[i].fuel, ship[i].max_fuel, ship[i].level()]
+        return JsonResponse(ctx)
+
     def matchpw(request):
         username = request.POST['username']
         print(username)

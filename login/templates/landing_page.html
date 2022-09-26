@@ -28,10 +28,9 @@
         class="bg-black w-full px-8 py-2 flex justify-between items-center text-white"
       >
         <h2 class="text-base">Hello, {{owner}}</h2>
-        <a
-          href=""
-          class="fa-solid fa-right-from-bracket h-4 w-4 text-white text-base cursor-pointer"
-          >Log-Out</a
+        <a href="/" class="text-white text-base cursor-pointer">
+          <i class="fa-solid fa-right-from-bracket h-4 w-4"></i>
+          Log-Out</a
         >
       </div>
     </header>
@@ -39,7 +38,7 @@
       class="flex py-10 px-4 mb-20 justify-center gap-4 flex-col items-center"
     >
       {% for i in ship%}
-      <div class="flex flex-col w-4/5 gap-0 justify-center items-center">
+      <div class="flex flex-col w-11/12 gap-0 justify-center items-center">
         <div
           class="bg-gray-400 w-full px-2 py-2 flex justify-between items-center rounded-lg cursor-pointer hover:bg-blue-300"
           id="ship_{{i.id}}"
@@ -48,17 +47,25 @@
           <i class="fa-solid fa-gear h-4 w-4"></i>
         </div>
         <div
-          class="flex w-full bg-blue-100 flex-col mx-2 my-2 items-center justify-center"
+          class="hidden w-full bg-blue-100 flex-col mx-2 my-2 items-center justify-center"
+          id="desc_{{i.id}}"
         >
-          <h3 class="text-sm text-center">
+          <h3 id="fuel_{{i.id}}" class="text-sm text-center">
             Fuel Level = {{i.fuel}}/{{i.max_fuel}}
           </h3>
           <div class="w-12 h-36 bg-black flex justify-end items-end">
-            <div class="w-12 bg-blue-500" style="height: {{i.level}}%;"></div>
+            <div
+              class="w-12 bg-blue-500"
+              id="style_{{i.id}}"
+              style="height: {{i.level}}%;"
+            ></div>
           </div>
         </div>
       </div>
       {% endfor %}
+      <div class="w-full">
+        <h1 id="tester">test</h1>
+      </div>
     </main>
     <footer>
       <div class="fixed bottom-0 w-full bg-blue-800 flex justify-end px-4 py-4">
@@ -70,12 +77,38 @@
       integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
       crossorigin="anonymous"
     ></script>
+    {% for i in ship%}
     <script>
-      const ship1 = document.getElementById("ship_1");
-      ship1.addEventListener("click", shipclk);
+      const ship{{i.id}} = document.getElementById("ship_{{i.id}}");
+      const desc{{i.id}} = document.getElementById("desc_{{i.id}}");
+      ship{{i.id}}.addEventListener("click", shipclk);
       function shipclk() {
-        ship1.style.display = "flex";
+        if (desc{{i.id}}.style.display == "none") {
+          desc{{i.id}}.style.display = "flex";
+        } else {
+          desc{{i.id}}.style.display = "none";
+        }
       }
+    </script>
+    {% endfor %}
+    <script>
+      $(document).ready(function () {
+        updateState();
+
+        function updateState() {
+          $.ajax({
+            url: "/get_data/{{owner}}", // if you don't have dynamic url
+            type: "GET",
+          }).done((response) => {
+            const data = response;
+            $("#tester").text(data.d1[0]);
+            console.log(data);
+            setTimeout(function () {
+              updateState();
+            }, 1000);
+          });
+        }
+      });
     </script>
   </body>
 </html>
